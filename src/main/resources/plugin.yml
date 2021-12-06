@@ -1,0 +1,6 @@
+name: DetetiveMC
+version: '${project.version}'
+main: me.saulooliveira.detetivemc.DetetiveMC
+api-version: 1.17
+authors: [ SauloOliveira ]
+description: Plugin criado para simular minigame detetive no Minecraft

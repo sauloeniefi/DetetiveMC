@@ -50,6 +50,7 @@ public class ReputacaoEvent implements Listener {
                     Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(20);
                     assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou o Detetive! +20 de reputação!");
                     assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    assassinado.getWorld().getPlayers().forEach(player -> player.sendMessage(ChatColor.DARK_RED + "Um Detetive foi eliminado!"));
                 } else {
                     Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(5);
                     assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você fez uma vítima! +5 de reputação!");
@@ -75,7 +76,7 @@ public class ReputacaoEvent implements Listener {
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um detetive! -20 de reputação!");
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Preste mais atenção...");
                 assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_GHAST_SCREAM, 1, 1);
-
+                assassinado.getWorld().getPlayers().forEach(player -> player.sendMessage(ChatColor.DARK_RED + "Um Detetive foi eliminado!"));
             }
 
             if (mapaAssassino.containsValue(Papel.DETETIVE) && mapaAssassinado.containsValue(Papel.SUSPEITO)) {

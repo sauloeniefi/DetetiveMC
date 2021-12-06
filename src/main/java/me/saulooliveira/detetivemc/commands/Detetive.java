@@ -8,11 +8,10 @@ import org.bukkit.entity.Player;
 
 public class Detetive implements CommandExecutor {
 
-    DetetiveGame lobby = new DetetiveGame();
+    DetetiveGame lobby = DetetiveGame.INSTANCE;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-
 
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
@@ -25,6 +24,9 @@ public class Detetive implements CommandExecutor {
                         if (!lobby.getLobby().isEmpty()) {
                             if (lobby.getLobby().containsKey(player)) {
                                 player.sendMessage("Você já está no lobby.");
+                            } else {
+                                lobby.getLobby().put(player, lobby.randomizeRole());
+                                player.sendMessage("Você entrou na sala do detetive!");
                             }
                         } else {
                             lobby.getLobby().put(player, lobby.randomizeRole());

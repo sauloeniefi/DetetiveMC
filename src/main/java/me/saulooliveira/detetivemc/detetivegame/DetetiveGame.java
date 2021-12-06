@@ -9,6 +9,12 @@ import java.util.Random;
 
 public class DetetiveGame {
 
+    public static final DetetiveGame INSTANCE = new DetetiveGame();
+
+    public static DetetiveGame getInstance() {
+        return INSTANCE;
+    }
+
     private Map<Player, Papel> playersInLobby = new HashMap<>();
 
     public Map<Player, Papel> getLobby() {
@@ -21,7 +27,7 @@ public class DetetiveGame {
         if (!playersInLobby.isEmpty()) {
             if (playersInLobby.containsValue(Papel.TRAIDOR) ||
                     playersInLobby.containsValue(Papel.DETETIVE)) {
-                randomizeRole();
+                return Papel.SUSPEITO;
             }
         }
 

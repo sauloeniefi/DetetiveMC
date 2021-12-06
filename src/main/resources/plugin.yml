@@ -6,6 +6,15 @@ authors: [ SauloOliveira ]
 description: Plugin criado para simular minigame detetive no Minecraft
 commands:
   detetive:
-    description: Entrar no minigame Detetive
+    description: Comandos relacionados ao minigame Detetive
     usage: /<command> <arg>
+    aliases:
+      - dt
+      - dtt
+  reputacao:
+    description: Comandos para gerenciar Reputacao
+    usage: /<command> <arg>
+    aliases:
+      - rep
+      - rp
 

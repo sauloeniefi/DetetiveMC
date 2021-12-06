@@ -3,6 +3,7 @@ package me.saulooliveira.detetivemc.events;
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
 import me.saulooliveira.detetivemc.enums.Papel;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Reputacao implements Listener {
+public class ReputacaoEvent implements Listener {
 
     DetetiveGame detetiveGame = DetetiveGame.INSTANCE;
 
@@ -44,37 +45,46 @@ public class Reputacao implements Listener {
                 if (mapaAssassinado.containsValue(Papel.DETETIVE)) {
                     Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(20);
                     assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou o Detetive! +20 de reputação!");
+                    assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,1,1);
                 } else {
                     Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(5);
                     assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você fez uma vítima! +5 de reputação!");
+                    assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,1,1);
+
                 }
             }
 
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.TRAIDOR)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(10);
                 assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou um traídor! +10 de reputação!");
+                assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST,1,1);
             }
 
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.SUSPEITO)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-5);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um suspeito! -5 de reputação!");
+                assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_GHAST_DEATH,1,1);
             }
 
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.DETETIVE)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-20);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um detetive! -20 de reputação!");
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Preste mais atenção...");
+                assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_GHAST_SCREAM,1,1);
+
             }
 
             if (mapaAssassino.containsValue(Papel.DETETIVE) && mapaAssassinado.containsValue(Papel.SUSPEITO)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-5);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um inocente! -5 de reputação!");
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Ainda há traídores à solta...");
+                assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_GHAST_DEATH,1,1);
             }
 
             if (mapaAssassino.containsValue(Papel.DETETIVE) && mapaAssassinado.containsValue(Papel.TRAIDOR)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(10);
                 assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou um traídor! +10 de reputação!");
+                assassinado.getPlayer().playSound(assassinado.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,1,1);
             }
         }
     }

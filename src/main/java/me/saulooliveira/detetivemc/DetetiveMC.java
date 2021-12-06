@@ -6,9 +6,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DetetiveMC extends JavaPlugin {
 
+    private static DetetiveMC plugin;
+
     @Override
     public void onEnable() {
-        System.out.println("Meu primeiro plugin foi Iniciado!");
+        plugin = this;
+
+        System.out.println("Meu primeiro plugin foi Iniciado!!!!!!!!!!!!!!!!!!!!!");
 
         getCommand("detetive").setExecutor(new Detetive());
         getServer().getPluginManager().registerEvents(new Reputacao(), this);

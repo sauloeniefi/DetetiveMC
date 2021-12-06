@@ -15,7 +15,6 @@ import java.util.Objects;
 
 public class Reputacao implements Listener {
 
-
     DetetiveGame detetiveGame = DetetiveGame.INSTANCE;
 
     @EventHandler
@@ -25,11 +24,8 @@ public class Reputacao implements Listener {
 
         if (assassino instanceof Player && assassinado != null) {
 
-            System.out.println("ALGUEM MORREU");
             Map<Player, Papel> mapaAssassino = new HashMap<>();
             Map<Player, Papel> mapaAssassinado = new HashMap<>();
-
-            System.out.println(detetiveGame.getLobby());
 
             for (Map.Entry<Player, Papel> entry : detetiveGame.getLobby().entrySet()) {
                 if (entry.getKey().equals(assassino)) {
@@ -43,7 +39,6 @@ public class Reputacao implements Listener {
                 }
             }
 
-            // ASSASSINO MATA
             if (mapaAssassino.containsValue(Papel.TRAIDOR)) {
                 if (mapaAssassinado.containsValue(Papel.DETETIVE)) {
                     Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(20);
@@ -54,33 +49,28 @@ public class Reputacao implements Listener {
                 }
             }
 
-            // SUSPEITO MATA TRAIDOR
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.TRAIDOR)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(10);
                 assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou um traídor! +10 de reputação!");
             }
 
-            // SUSPEITO MATA SUSPEITO
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.SUSPEITO)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-5);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um suspeito! -5 de reputação!");
             }
 
-            // SUSPEITO MATA DETETIVE
             if (mapaAssassino.containsValue(Papel.SUSPEITO) && mapaAssassinado.containsValue(Papel.DETETIVE)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-20);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um detetive! -20 de reputação!");
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Preste mais atenção...");
             }
 
-            // DETETIVE MATA SUSPEITO
             if (mapaAssassino.containsValue(Papel.DETETIVE) && mapaAssassinado.containsValue(Papel.SUSPEITO)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(-5);
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Você eliminou um inocente! -5 de reputação!");
                 assassinado.getPlayer().sendMessage(ChatColor.RED + "Ainda há traídores à solta...");
             }
 
-            // DETETIVE MATA TRAIDOR
             if (mapaAssassino.containsValue(Papel.DETETIVE) && mapaAssassinado.containsValue(Papel.TRAIDOR)) {
                 Objects.requireNonNull(assassinado.getPlayer()).giveExpLevels(10);
                 assassinado.getPlayer().sendMessage(ChatColor.GREEN + "Você eliminou um traídor! +10 de reputação!");

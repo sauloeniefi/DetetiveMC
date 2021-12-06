@@ -17,7 +17,7 @@ public final class DetetiveMC extends JavaPlugin {
 
         getCommand("detetive").setExecutor(new Detetive());
         getCommand("reputacao").setExecutor(new Reputacao());
-        getServer().getPluginManager().registerEvents(new ReputacaoEvent(), this);
+        getServer().getPluginManager().registerEvents(new ReputacaoEvent(), plugin);
     }
 
     @Override

@@ -1,10 +1,13 @@
 package me.saulooliveira.detetivemc.commands;
 
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
+import me.saulooliveira.detetivemc.enums.Papel;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
 
 public class Detetive implements CommandExecutor {
 
@@ -41,6 +44,23 @@ public class Detetive implements CommandExecutor {
                     case "iniciar":
                         commandSender.sendMessage("Iniciou o jogo!");
                         break;
+
+                    case "traidor":
+                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                                lobby.getLobby().replace(entry.getKey(), Papel.TRAIDOR);
+                            }
+                        }
+                        break;
+
+                    case "detetive":
+                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                                lobby.getLobby().replace(entry.getKey(), Papel.DETETIVE);
+                            }
+                        }
+                        break;
+
 
                     default:
                         player.sendMessage("Você precisa passar um argumento para este comando");

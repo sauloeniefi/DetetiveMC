@@ -3,6 +3,7 @@ package me.saulooliveira.detetivemc.events;
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
 import me.saulooliveira.detetivemc.entities.DeadBodyEntity;
 import me.saulooliveira.detetivemc.enums.Papel;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -110,8 +111,12 @@ public class ReputacaoEvent implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
 
                 for (ItemStack itemStack : player.getInventory().getContents()) {
-                    player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
-                    player.getInventory().removeItem(itemStack);
+                    try {
+                        player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                        player.getInventory().removeItem(itemStack);
+                    } catch (Exception e) {
+
+                    }
                 }
 
                 event.setCancelled(true);

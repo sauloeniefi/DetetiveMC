@@ -1,8 +1,11 @@
 package me.saulooliveira.detetivemc.commands;
 
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
+import me.saulooliveira.detetivemc.detetivegame.SpawnLocations;
 import me.saulooliveira.detetivemc.enums.Papel;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,12 +16,14 @@ import java.util.Map;
 public class Detetive implements CommandExecutor {
 
     DetetiveGame lobby = DetetiveGame.INSTANCE;
+    SpawnLocations spawnLocations = new SpawnLocations();
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
 
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
+            Location spawnLobby = player.getWorld().getSpawnLocation();
 
             if (args.length > 0) {
 
@@ -31,12 +36,18 @@ public class Detetive implements CommandExecutor {
                             } else {
                                 lobby.getLobby().put(player, lobby.randomizeRole());
                                 player.sendMessage("Você entrou na sala do detetive!");
+                                player.teleport(spawnLobby);
                                 player.setGameMode(GameMode.SURVIVAL);
+                                player.setInvulnerable(false);
                             }
                         } else {
                             lobby.getLobby().put(player, lobby.randomizeRole());
                             player.sendMessage("Você entrou na sala do detetive!");
+                            player.teleport(spawnLobby);
                             player.setGameMode(GameMode.SURVIVAL);
+//                            player.setInvulnerable(true);
+                            player.setInvulnerable(false);
+
                         }
                         break;
 
@@ -44,8 +55,21 @@ public class Detetive implements CommandExecutor {
                         player.sendMessage(lobby.getLobby().toString());
                         break;
 
+                    case "listar-players":
+                        player.sendMessage(lobby.listarPlayers().toString());
+
                     case "iniciar":
-                        commandSender.sendMessage("Iniciou o jogo!");
+                        if (verificarInicioLobby(lobby.getLobby())) {
+
+                            for (int i = 0; i < lobby.listarPlayers().size(); i++) {
+                                lobby.listarPlayers().get(i).teleport(spawnLocations.getListaSpawns().get(i));
+                            }
+
+                            commandSender.sendMessage("Iniciou o jogo!");
+
+                        } else {
+                            player.sendMessage(ChatColor.YELLOW + "Impossível iniciar o minigame, jogadores insuficientes.");
+                        }
                         break;
 
                     case "sair":
@@ -81,5 +105,12 @@ public class Detetive implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    private boolean verificarInicioLobby(Map<Player, Papel> mapaLobby) {
+        boolean temDetetive = mapaLobby.containsValue(Papel.DETETIVE);
+        boolean temTraidor = mapaLobby.containsValue(Papel.TRAIDOR);
+
+        return temDetetive && temTraidor && mapaLobby.size() >= 5;
     }
 }

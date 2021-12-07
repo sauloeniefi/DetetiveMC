@@ -3,9 +3,7 @@ package me.saulooliveira.detetivemc.detetivegame;
 import me.saulooliveira.detetivemc.enums.Papel;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class DetetiveGame {
 
@@ -32,6 +30,17 @@ public class DetetiveGame {
         }
 
         return papelSorteado;
+    }
+
+    public List<Player> listarPlayers(){
+        List<Player> players = new ArrayList();
+        for (Map.Entry<Player, Papel> entry : getLobby().entrySet()) {
+            if (entry.getKey() != null) {
+                players.add(entry.getKey());
+            }
+        }
+
+        return players;
     }
 
 

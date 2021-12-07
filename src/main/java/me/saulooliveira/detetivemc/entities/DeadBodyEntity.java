@@ -29,11 +29,16 @@ public class DeadBodyEntity {
 
         EntityPlayer craftPlayer = ((CraftPlayer) player).getHandle();
 
-
-        Property textures = (Property) craftPlayer.getProfile().getProperties().get("textures").toArray()[0];
         GameProfile gameProfile = new GameProfile(UUID.randomUUID(), player.getName());
-        gameProfile.getProperties().put("textures", new Property("textures", textures.getValue(), textures.getSignature()));
 
+        try {
+            Property textures = (Property) craftPlayer.getProfile().getProperties().get("textures").toArray()[0];
+            gameProfile.getProperties().put("textures", new Property("textures", textures.getValue(), textures.getSignature()));
+        } catch (Exception e) {
+            String signature = "pXKGKqY49hu3JPuLNVOYMam3MroCg3dCKjFvU2b/6EuNvtU4pwngCQMhAEDU0wXbk5MBY+tCqIEgeWFCpk6qA/BgR1fuWwF8Kx/UR8l0XFrCNhv0S2sTyM+RJlYB+Tigy6zJKp5WWWLdsOaFmBA9JYtFcUHE5BXYtkbUn9sFp1+Vsea1TFXpM9i5600d8eVng3y+tVxgSj3sZ7WYzdgqPXfyaDIReZHDG6PMuNPERhNVjgekbusI05WOFJ5e6tF83S6HioUKN4nqRk9S5BFxuZWzbf/qVuOkOpa91xPz7wbY0m4MxP5xVyA6Rdoef3qYDYzQSeCSo90oTC8lO0faif5bMiplL+7rA7kyBdBfAfG3FxHhOY1IZLgcZER88k1aIM5BWhVu0S7hu1Kv8K9jEE3oVWK6YNilADHtUZF/yehehgkR2JfPfwR3poIqHTrT0YeAxYdAtAskCsLXc7dphidwN3FUF/uqg5MgL7iECpfKyytackvE4PyWnD+SMiG367W4R3h2r38PV3EpvLxQez9y7LqWH2LqRvBMFAYo7o6tmdtiys4nEhMuRYxCz1P/yN5Mu0FDG3OzjkBTGCVK8U2bSEIa1ZTrfXKbDpZKhhlThWDgfEUTkuY+aOZxbmtAKAelq9DMw3rJsIvBmxwLvP1XJXiG4/CnxGkeIr2/oH0=";
+            String texture = "ewogICJ0aW1lc3RhbXAiIDogMTYyMTAzMDUzNDI2MiwKICAicHJvZmlsZUlkIiA6ICI5ZDQyNWFiOGFmZjg0MGU1OWM3NzUzZjc5Mjg5YjMyZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJUb21wa2luNDIiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjkwNjk2ZWJjNzRjZTdhOTAwZWM4YWJlZWMwZGMxY2NiMzUzNGMxYjhiYTZjYmQ5ZTgzYzVjZDdmMzgxZmI0OCIKICAgIH0KICB9Cn0=";
+            gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
+        }
 
         EntityPlayer deadBody = new EntityPlayer(
                 ((CraftServer) Bukkit.getServer()).getServer(),

@@ -1,0 +1,13 @@
+lootItems:
+  0:
+    material: WOODEN_SWORD
+    name: "&7Espada velha"
+    chance: 0.5
+    minAmount: 1
+    maxAmount: 1
+  1:
+    material: LEATHER_CHESTPLATE
+    name: "§7Peitoral velho"
+    chance: 0.5
+    minAmount: 1
+    maxAmount: 1

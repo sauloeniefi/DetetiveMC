@@ -23,8 +23,12 @@ public class ChestLocations {
     }
 
     public void inserirBausNoMundo() {
-        for (Location chestSpawn : chestSpawns) {
-            chestSpawn.getBlock().setType(Material.CHEST);
+        try {
+            for (Location chestSpawn : chestSpawns) {
+                chestSpawn.getBlock().setType(Material.CHEST);
+            }
+        } catch (Exception e) {
+
         }
     }
 

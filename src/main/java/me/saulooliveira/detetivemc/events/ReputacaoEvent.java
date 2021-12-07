@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ReputacaoEvent implements Listener {
 
@@ -110,6 +111,30 @@ public class ReputacaoEvent implements Listener {
                 player.setGameMode(GameMode.SPECTATOR);
                 player.playSound(player.getLocation(), Sound.ENTITY_GHAST_SCREAM, 1, 1);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
+
+                detetiveGame.getPlayersVivos().remove(player.getUniqueId());
+                boolean vitoriaTraidores = detetiveGame.verificarCondicaoDeVitoriaTraidor();
+                boolean vitoriaInocentes = detetiveGame.verificarCondicaoDeVitoriaInocentes();
+                if (vitoriaTraidores && !vitoriaInocentes) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os traidores venceram!");
+                    try {
+                        Thread.sleep(5000);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                if (vitoriaInocentes) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os inocentes venceram!");
+                    try {
+                        Thread.sleep(5000);
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
 
                 for (ItemStack itemStack : player.getInventory().getContents()) {
                     try {

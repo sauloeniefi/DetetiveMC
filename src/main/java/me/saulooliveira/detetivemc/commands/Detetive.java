@@ -37,6 +37,7 @@ public class Detetive implements CommandExecutor {
                                 player.sendMessage("Você já está no lobby.");
                             } else {
                                 lobby.getLobby().put(player.getUniqueId(), lobby.randomizeRole());
+                                lobby.getPlayersVivos().put(player.getUniqueId(), true);
                                 player.sendMessage("Você entrou na sala do detetive!");
                                 player.teleport(spawnLobby);
                                 player.setGameMode(GameMode.SURVIVAL);
@@ -44,6 +45,7 @@ public class Detetive implements CommandExecutor {
                             }
                         } else {
                             lobby.getLobby().put(player.getUniqueId(), lobby.randomizeRole());
+                            lobby.getPlayersVivos().put(player.getUniqueId(), true);
                             player.sendMessage("Você entrou na sala do detetive!");
                             player.teleport(spawnLobby);
                             player.setGameMode(GameMode.SURVIVAL);

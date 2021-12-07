@@ -13,9 +13,14 @@ public class DetetiveGame {
     }
 
     private Map<UUID, Papel> playersInLobby = new HashMap<>();
+    private Map<UUID, Boolean> playersVivos = new HashMap<>();
 
     public Map<UUID, Papel> getLobby() {
         return playersInLobby;
+    }
+
+    public Map<UUID, Boolean> getPlayersVivos() {
+        return playersVivos;
     }
 
     public Papel randomizeRole() {
@@ -42,6 +47,29 @@ public class DetetiveGame {
         return players;
     }
 
+
+    public boolean verificarCondicaoDeVitoriaInocentes() {
+        for (Map.Entry<UUID, Boolean> entry : playersVivos.entrySet()) {
+            if (entry.getValue().equals(false) && getPlayerRoleByUUID(entry.getKey()).equals(Papel.TRAIDOR)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarCondicaoDeVitoriaTraidor() {
+        return playersVivos.size() == 1;
+    }
+
+    private Papel getPlayerRoleByUUID(UUID uuid) {
+        Papel papel = Papel.SUSPEITO;
+        for (Map.Entry<UUID, Papel> entry : playersInLobby.entrySet()) {
+            if (entry.getKey().equals(uuid)) {
+                return entry.getValue();
+            }
+        }
+        return papel;
+    }
 
 
 }

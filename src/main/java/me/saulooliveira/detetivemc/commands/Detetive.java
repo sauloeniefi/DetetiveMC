@@ -2,6 +2,7 @@ package me.saulooliveira.detetivemc.commands;
 
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
 import me.saulooliveira.detetivemc.enums.Papel;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,10 +31,12 @@ public class Detetive implements CommandExecutor {
                             } else {
                                 lobby.getLobby().put(player, lobby.randomizeRole());
                                 player.sendMessage("Você entrou na sala do detetive!");
+                                player.setGameMode(GameMode.SURVIVAL);
                             }
                         } else {
                             lobby.getLobby().put(player, lobby.randomizeRole());
                             player.sendMessage("Você entrou na sala do detetive!");
+                            player.setGameMode(GameMode.SURVIVAL);
                         }
                         break;
 
@@ -43,6 +46,14 @@ public class Detetive implements CommandExecutor {
 
                     case "iniciar":
                         commandSender.sendMessage("Iniciou o jogo!");
+                        break;
+
+                    case "sair":
+                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                                lobby.getLobby().remove(entry.getKey());
+                            }
+                        }
                         break;
 
                     case "traidor":
@@ -60,7 +71,6 @@ public class Detetive implements CommandExecutor {
                             }
                         }
                         break;
-
 
                     default:
                         player.sendMessage("Você precisa passar um argumento para este comando");

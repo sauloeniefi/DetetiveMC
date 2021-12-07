@@ -1,6 +1,7 @@
 package me.saulooliveira.detetivemc.events;
 
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
+import me.saulooliveira.detetivemc.entities.DeadBodyEntity;
 import me.saulooliveira.detetivemc.enums.Papel;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -9,9 +10,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -95,18 +96,25 @@ public class ReputacaoEvent implements Listener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent event) {
-        event.setKeepLevel(true);
-        event.setDroppedExp(0);
-        event.getEntity().setGameMode(GameMode.SPECTATOR);
-        event.getEntity().playSound(event.getEntity().getLocation(), Sound.ENTITY_GHAST_DEATH, 1, 1);
+    public void onDamage(EntityDamageEvent event) {
+
+        if (event.getEntity() instanceof Player) {
+            if (event.getFinalDamage() >= ((Player) event.getEntity()).getHealth()) {
+                Player player = (Player) event.getEntity();
+                DeadBodyEntity.execute(player);
+
+                player.setHealth(20);
+                player.setGameMode(GameMode.SPECTATOR);
+                player.playSound(player.getLocation(), Sound.ENTITY_GHAST_SCREAM, 1, 1);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
+                event.setCancelled(true);
+            }
+        }
+
     }
 
     @EventHandler
-    public void onRespawn(PlayerRespawnEvent event) {
-        PotionEffect potionEffect = new PotionEffect(PotionEffectType.BLINDNESS, 20, 5, false, false);
-        event.getPlayer().addPotionEffect(potionEffect);
-
-        event.setRespawnLocation(event.getPlayer().getLocation());
+    public void onJoin(PlayerJoinEvent event) {
+        event.getPlayer().setInvulnerable(false);
     }
 }

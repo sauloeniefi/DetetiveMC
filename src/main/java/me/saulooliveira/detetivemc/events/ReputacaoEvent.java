@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -107,6 +108,12 @@ public class ReputacaoEvent implements Listener {
                 player.setGameMode(GameMode.SPECTATOR);
                 player.playSound(player.getLocation(), Sound.ENTITY_GHAST_SCREAM, 1, 1);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
+
+                for (ItemStack itemStack : player.getInventory().getContents()) {
+                    player.getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                    player.getInventory().removeItem(itemStack);
+                }
+
                 event.setCancelled(true);
             }
         }

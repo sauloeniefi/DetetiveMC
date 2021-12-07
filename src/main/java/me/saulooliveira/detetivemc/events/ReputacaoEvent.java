@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ReputacaoEvent implements Listener {
 
@@ -33,16 +34,16 @@ public class ReputacaoEvent implements Listener {
 
         if (assassino instanceof Player && assassinado != null) {
 
-            Map<Player, Papel> mapaAssassino = new HashMap<>();
-            Map<Player, Papel> mapaAssassinado = new HashMap<>();
+            Map<UUID, Papel> mapaAssassino = new HashMap<>();
+            Map<UUID, Papel> mapaAssassinado = new HashMap<>();
 
-            for (Map.Entry<Player, Papel> entry : detetiveGame.getLobby().entrySet()) {
+            for (Map.Entry<UUID, Papel> entry : detetiveGame.getLobby().entrySet()) {
                 if (entry.getKey().equals(assassino)) {
                     mapaAssassinado.put(entry.getKey(), entry.getValue());
                 }
             }
 
-            for (Map.Entry<Player, Papel> entry : detetiveGame.getLobby().entrySet()) {
+            for (Map.Entry<UUID, Papel> entry : detetiveGame.getLobby().entrySet()) {
                 if (entry.getKey().equals(assassinado)) {
                     mapaAssassino.put(entry.getKey(), entry.getValue());
                 }

@@ -3,6 +3,7 @@ package me.saulooliveira.detetivemc.commands;
 import me.saulooliveira.detetivemc.detetivegame.DetetiveGame;
 import me.saulooliveira.detetivemc.detetivegame.SpawnLocations;
 import me.saulooliveira.detetivemc.enums.Papel;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class Detetive implements CommandExecutor {
 
@@ -34,14 +36,14 @@ public class Detetive implements CommandExecutor {
                             if (lobby.getLobby().containsKey(player)) {
                                 player.sendMessage("Você já está no lobby.");
                             } else {
-                                lobby.getLobby().put(player, lobby.randomizeRole());
+                                lobby.getLobby().put(player.getUniqueId(), lobby.randomizeRole());
                                 player.sendMessage("Você entrou na sala do detetive!");
                                 player.teleport(spawnLobby);
                                 player.setGameMode(GameMode.SURVIVAL);
                                 player.setInvulnerable(false);
                             }
                         } else {
-                            lobby.getLobby().put(player, lobby.randomizeRole());
+                            lobby.getLobby().put(player.getUniqueId(), lobby.randomizeRole());
                             player.sendMessage("Você entrou na sala do detetive!");
                             player.teleport(spawnLobby);
                             player.setGameMode(GameMode.SURVIVAL);
@@ -55,14 +57,12 @@ public class Detetive implements CommandExecutor {
                         player.sendMessage(lobby.getLobby().toString());
                         break;
 
-                    case "listar-players":
-                        player.sendMessage(lobby.listarPlayers().toString());
-
                     case "iniciar":
                         if (verificarInicioLobby(lobby.getLobby())) {
 
                             for (int i = 0; i < lobby.listarPlayers().size(); i++) {
-                                lobby.listarPlayers().get(i).teleport(spawnLocations.getListaSpawns().get(i));
+                                Player playerTeleportado = (Player) Bukkit.getPlayer(lobby.listarPlayers().get(i));
+                                playerTeleportado.teleport(spawnLocations.getListaSpawns().get(i));
                             }
 
                             commandSender.sendMessage("Iniciou o jogo!");
@@ -73,24 +73,24 @@ public class Detetive implements CommandExecutor {
                         break;
 
                     case "sair":
-                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
-                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                        for (Map.Entry<UUID, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer().getUniqueId())) {
                                 lobby.getLobby().remove(entry.getKey());
                             }
                         }
                         break;
 
                     case "traidor":
-                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
-                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                        for (Map.Entry<UUID, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer().getUniqueId())) {
                                 lobby.getLobby().replace(entry.getKey(), Papel.TRAIDOR);
                             }
                         }
                         break;
 
                     case "detetive":
-                        for (Map.Entry<Player, Papel> entry : lobby.getLobby().entrySet()) {
-                            if (entry.getKey().equals(((Player) commandSender).getPlayer())) {
+                        for (Map.Entry<UUID, Papel> entry : lobby.getLobby().entrySet()) {
+                            if (entry.getKey().equals(((Player) commandSender).getPlayer().getUniqueId())) {
                                 lobby.getLobby().replace(entry.getKey(), Papel.DETETIVE);
                             }
                         }
@@ -107,7 +107,7 @@ public class Detetive implements CommandExecutor {
         return true;
     }
 
-    private boolean verificarInicioLobby(Map<Player, Papel> mapaLobby) {
+    private boolean verificarInicioLobby(Map<UUID, Papel> mapaLobby) {
         boolean temDetetive = mapaLobby.containsValue(Papel.DETETIVE);
         boolean temTraidor = mapaLobby.containsValue(Papel.TRAIDOR);
 

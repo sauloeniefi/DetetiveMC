@@ -1,7 +1,6 @@
 package me.saulooliveira.detetivemc.detetivegame;
 
 import me.saulooliveira.detetivemc.enums.Papel;
-import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -13,9 +12,9 @@ public class DetetiveGame {
         return INSTANCE;
     }
 
-    private Map<Player, Papel> playersInLobby = new HashMap<>();
+    private Map<UUID, Papel> playersInLobby = new HashMap<>();
 
-    public Map<Player, Papel> getLobby() {
+    public Map<UUID, Papel> getLobby() {
         return playersInLobby;
     }
 
@@ -32,9 +31,9 @@ public class DetetiveGame {
         return papelSorteado;
     }
 
-    public List<Player> listarPlayers(){
-        List<Player> players = new ArrayList();
-        for (Map.Entry<Player, Papel> entry : getLobby().entrySet()) {
+    public List<UUID> listarPlayers() {
+        List<UUID> players = new ArrayList();
+        for (Map.Entry<UUID, Papel> entry : getLobby().entrySet()) {
             if (entry.getKey() != null) {
                 players.add(entry.getKey());
             }
@@ -42,6 +41,7 @@ public class DetetiveGame {
 
         return players;
     }
+
 
 
 }

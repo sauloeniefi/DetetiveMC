@@ -113,28 +113,8 @@ public class ReputacaoEvent implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
 
                 detetiveGame.getPlayersVivos().remove(player.getUniqueId());
-                boolean vitoriaTraidores = detetiveGame.verificarCondicaoDeVitoriaTraidor();
-                boolean vitoriaInocentes = detetiveGame.verificarCondicaoDeVitoriaInocentes();
-                if (vitoriaTraidores && !vitoriaInocentes) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os traidores venceram!");
-                    try {
-                        Thread.sleep(5000);
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
 
-                if (vitoriaInocentes) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os inocentes venceram!");
-                    try {
-                        Thread.sleep(5000);
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-
+                verificarVencedor();
 
                 for (ItemStack itemStack : player.getInventory().getContents()) {
                     try {
@@ -154,5 +134,29 @@ public class ReputacaoEvent implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         event.getPlayer().setInvulnerable(false);
+    }
+
+    private void verificarVencedor(){
+        boolean vitoriaTraidores = detetiveGame.verificarCondicaoDeVitoriaTraidor();
+        boolean vitoriaInocentes = detetiveGame.verificarCondicaoDeVitoriaInocentes();
+        if (vitoriaTraidores && !vitoriaInocentes) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os traidores venceram!");
+            try {
+                Thread.sleep(5000);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        if (vitoriaInocentes) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os inocentes venceram!");
+            try {
+                Thread.sleep(5000);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }

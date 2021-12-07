@@ -2,6 +2,7 @@ package me.saulooliveira.detetivemc;
 
 import me.saulooliveira.detetivemc.commands.Detetive;
 import me.saulooliveira.detetivemc.commands.Reputacao;
+import me.saulooliveira.detetivemc.detetivegame.ChestLocations;
 import me.saulooliveira.detetivemc.events.ReputacaoEvent;
 import me.saulooliveira.detetivemc.listeners.ChestManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,12 +13,16 @@ public final class DetetiveMC extends JavaPlugin {
 
     private ChestManager chestManager;
 
+    private ChestLocations chestLocations = new ChestLocations();
+
     @Override
     public void onEnable() {
         plugin = this;
 
         saveDefaultConfig();
         chestManager = new ChestManager(getConfig());
+
+        chestLocations.inserirBausNoMundo();
 
         getCommand("detetive").setExecutor(new Detetive());
         getCommand("reputacao").setExecutor(new Reputacao());

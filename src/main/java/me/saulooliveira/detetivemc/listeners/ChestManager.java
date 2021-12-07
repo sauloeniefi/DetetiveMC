@@ -1,14 +1,15 @@
 package me.saulooliveira.detetivemc.listeners;
 
 import me.saulooliveira.detetivemc.storages.LootItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -57,6 +58,21 @@ public class ChestManager implements Listener {
             fill(chest.getInventory());
         }
 
+    }
+
+    @EventHandler
+    private void onChestClose(InventoryCloseEvent event) {
+
+        InventoryHolder holder = event.getInventory().getHolder();
+
+        if (holder instanceof Chest) {
+            Chest chest = (Chest) holder;
+            Block block = chest.getBlock();
+            block.setType(Material.AIR);
+            block.breakNaturally();
+            block.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation().add(0.5,0.5,0.5),  5, 1, 0.1, 0.1, 0.1, Material.CHEST.createBlockData());
+            block.getWorld().playSound(block.getLocation(),Sound.BLOCK_WOOD_BREAK,1,1);
+        }
     }
 
     public void fill(Inventory inventory) {

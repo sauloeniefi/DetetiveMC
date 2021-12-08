@@ -49,26 +49,11 @@ public class DetetiveGame {
 
 
     public boolean verificarCondicaoDeVitoriaInocentes() {
-        for (Map.Entry<UUID, Boolean> entry : playersVivos.entrySet()) {
-            if (entry.getValue().equals(false) && getPlayerRoleByUUID(entry.getKey()).equals(Papel.TRAIDOR)) {
-                return true;
-            }
-        }
-        return false;
+        return !playersInLobby.containsValue(Papel.TRAIDOR);
     }
 
     public boolean verificarCondicaoDeVitoriaTraidor() {
-        return playersVivos.size() == 1;
-    }
-
-    private Papel getPlayerRoleByUUID(UUID uuid) {
-        Papel papel = Papel.SUSPEITO;
-        for (Map.Entry<UUID, Papel> entry : playersInLobby.entrySet()) {
-            if (entry.getKey().equals(uuid)) {
-                return entry.getValue();
-            }
-        }
-        return papel;
+        return playersInLobby.size() == 1 && playersInLobby.containsValue(Papel.TRAIDOR);
     }
 
 

@@ -116,14 +116,14 @@ public class ReputacaoEvent implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1));
 
                 EntityDamageEvent eventoDano = player.getLastDamageCause();
-                if (eventoDano!=null && !eventoDano.isCancelled() && eventoDano instanceof EntityDamageByEntityEvent) {
+                if (eventoDano != null && !eventoDano.isCancelled() && eventoDano instanceof EntityDamageByEntityEvent) {
                     Entity damager = ((EntityDamageByEntityEvent) eventoDano).getDamager();
-                    if(damager instanceof Player) {
+                    if (damager instanceof Player) {
                         calcularReputacao(damager.getUniqueId(), player.getUniqueId());
                     }
                 }
 
-                detetiveGame.getPlayersVivos().remove(player.getUniqueId());
+                detetiveGame.getLobby().remove(player.getUniqueId());
                 verificarVencedor();
 
                 for (ItemStack itemStack : player.getInventory().getContents()) {
@@ -220,25 +220,14 @@ public class ReputacaoEvent implements Listener {
     private void verificarVencedor() {
         boolean vitoriaTraidores = detetiveGame.verificarCondicaoDeVitoriaTraidor();
         boolean vitoriaInocentes = detetiveGame.verificarCondicaoDeVitoriaInocentes();
-        if (vitoriaTraidores && !vitoriaInocentes) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os traidores venceram!");
-            //try {
-                //Thread.sleep(5000);
-                //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
-          //  } catch (InterruptedException e) {
-               // Thread.currentThread().interrupt();
-            }//
 
 
         if (vitoriaInocentes) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "say Os inocentes venceram!");
-            //try {
-                //Thread.sleep(5000);
-                //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "restart");
-            //} catch (InterruptedException e) {
-              //  Thread.currentThread().interrupt();
-            //}
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Os inocentes venceram");
+        } else if (vitoriaTraidores) {
+            Bukkit.broadcastMessage(ChatColor.GOLD + "O Traídor venceu");
         }
+
 
     }
 }

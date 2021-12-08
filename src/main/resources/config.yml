@@ -52,7 +52,7 @@ lootItems:
     name: "&fColete balistico"
     chance: 0.2
     minAmount: 1
-    maxAmount: 3
+    maxAmount: 1
   9:
     material: IRON_LEGGINGS
     name: "&fCalca de motoqueiro"
@@ -64,4 +64,4 @@ lootItems:
     name: "&8Espada afiada"
     chance: 0.1
     minAmount: 1
-    maxAmount: 3
+    maxAmount: 1

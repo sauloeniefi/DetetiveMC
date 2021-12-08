@@ -70,8 +70,8 @@ public class ChestManager implements Listener {
             Block block = chest.getBlock();
             block.setType(Material.AIR);
             block.breakNaturally();
-            block.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation().add(0.5,0.5,0.5),  5, 1, 0.1, 0.1, 0.1, Material.CHEST.createBlockData());
-            block.getWorld().playSound(block.getLocation(),Sound.BLOCK_WOOD_BREAK,1,1);
+            block.getWorld().spawnParticle(Particle.BLOCK_CRACK, block.getLocation().add(0.5, 0.5, 0.5), 5, 1, 0.1, 0.1, 0.1, Material.CHEST.createBlockData());
+            block.getWorld().playSound(block.getLocation(), Sound.BLOCK_WOOD_BREAK, 1, 1);
         }
     }
 

@@ -19,7 +19,7 @@ public class Reputacao implements CommandExecutor {
                 switch (args[0]) {
                     case "exibir":
                         player.sendMessage(ChatColor.GREEN + "Sua reputação é: " + player.getLevel());
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1,1);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                         break;
                 }
             }

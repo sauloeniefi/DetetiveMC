@@ -70,7 +70,7 @@ public class LootItem {
             );
         }
 
-        if (!enchantmentToLevelMap.isEmpty()){
+        if (!enchantmentToLevelMap.isEmpty()) {
             for (Map.Entry<Enchantment, Integer> enchantmentEntry : enchantmentToLevelMap.entrySet()) {
                 itemMeta.addEnchant(
                         enchantmentEntry.getKey(),

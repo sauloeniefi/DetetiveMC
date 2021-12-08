@@ -7,7 +7,61 @@ lootItems:
     maxAmount: 1
   1:
     material: LEATHER_CHESTPLATE
-    name: "§7Peitoral velho"
+    name: "&7Peitoral velho"
     chance: 0.5
     minAmount: 1
     maxAmount: 1
+  2:
+    material: LEATHER_LEGGINGS
+    name: "&7Calca rasgada"
+    chance: 0.4
+    minAmount: 1
+    maxAmount: 1
+  3:
+    material: LEATHER_BOOTS
+    name: "&7Botas fedidas"
+    chance: 0.4
+    minAmount: 1
+    maxAmount: 1
+  4:
+    material: LEATHER_HELMET
+    name: "&7Capuz envelhecido"
+    chance: 0.6
+    minAmount: 1
+    maxAmount: 1
+  5:
+    material: BOW
+    name: "&7Arco curvo"
+    chance: 0.2
+    minAmount: 1
+    maxAmount: 1
+  6:
+    material: ARROW
+    name: "&7Flecha"
+    chance: 0.2
+    minAmount: 1
+    maxAmount: 3
+  7:
+    material: BOW
+    name: "&7Arco curvo"
+    chance: 0.2
+    minAmount: 1
+    maxAmount: 1
+  8:
+    material: IRON_CHESTPLATE
+    name: "&fColete balistico"
+    chance: 0.2
+    minAmount: 1
+    maxAmount: 3
+  9:
+    material: IRON_LEGGINGS
+    name: "&fCalca de motoqueiro"
+    chance: 0.2
+    minAmount: 1
+    maxAmount: 1
+  10:
+    material: STONE_SWORD
+    name: "&8Espada afiada"
+    chance: 0.1
+    minAmount: 1
+    maxAmount: 3

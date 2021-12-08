@@ -19,10 +19,11 @@ public final class DetetiveMC extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        chestLocations.inserirBausNoMundo();
+
         saveDefaultConfig();
         chestManager = new ChestManager(getConfig());
 
-        chestLocations.inserirBausNoMundo();
 
         getCommand("detetive").setExecutor(new Detetive());
         getCommand("reputacao").setExecutor(new Reputacao());
